@@ -1,0 +1,137 @@
+{
+  "project_info": {
+    "project_number": "948858474962",
+    "project_id": "it-hive-984d3",
+    "storage_bucket": "it-hive-984d3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:948858474962:android:d3ca2a4f56c7714188f80b",
+        "android_client_info": {
+          "package_name": "app.pet.pal"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "948858474962-aodt59op5f4ojpg3vkheg3lm92ekmh2h.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "app.pet.pal",
+            "certificate_hash": "bbfac2c46440b3c41f23df1ff63dd30c084e813c"
+          }
+        },
+        {
+          "client_id": "948858474962-ojbv3d5mephk5j76vfpp7dhte5rcdb1o.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "app.pet.pal",
+            "certificate_hash": "31241585ab99934f3b81eb6402d4e86b38ad997b"
+          }
+        },
+        {
+          "client_id": "948858474962-q2a7seriresa1ff7stevav0rm2pcok1d.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "app.pet.pal",
+            "certificate_hash": "bb28d06a1d3816ef5588201229f66e9c7b7df311"
+          }
+        },
+        {
+          "client_id": "948858474962-4neb88ju957v45d239ufsqv3pf8odt7b.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBe3K5dtENC8-1Zv4dcWR9D3Sg_FXlXveE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "948858474962-4neb88ju957v45d239ufsqv3pf8odt7b.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:948858474962:android:46fe60637e14313088f80b",
+        "android_client_info": {
+          "package_name": "com.app.patrika"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "948858474962-7ke42ctne2u3dni2egre91mp7thl00s3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.app.patrika",
+            "certificate_hash": "31241585ab99934f3b81eb6402d4e86b38ad997b"
+          }
+        },
+        {
+          "client_id": "948858474962-j2bu6j3phfeltk6u6gestd3av33b76cc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.app.patrika",
+            "certificate_hash": "9bbd541a828533dccd60c8fc961f6e8cbc842dc5"
+          }
+        },
+        {
+          "client_id": "948858474962-4neb88ju957v45d239ufsqv3pf8odt7b.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBe3K5dtENC8-1Zv4dcWR9D3Sg_FXlXveE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "948858474962-4neb88ju957v45d239ufsqv3pf8odt7b.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:948858474962:android:da692395b00bb72888f80b",
+        "android_client_info": {
+          "package_name": "com.example.motor_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "948858474962-4neb88ju957v45d239ufsqv3pf8odt7b.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBe3K5dtENC8-1Zv4dcWR9D3Sg_FXlXveE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "948858474962-4neb88ju957v45d239ufsqv3pf8odt7b.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
