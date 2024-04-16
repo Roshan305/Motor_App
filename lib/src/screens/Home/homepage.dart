@@ -1,15 +1,21 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:motor_app/src/widgets/plus_button.dart';
 import 'package:motor_app/src/widgets/top_card.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+  const HomePage({Key? key, required User user})
+      : _user = user,
+        super(key: key);
+
+  final User _user;
 
   @override
   _HomePageState createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
+  late User user;
   final _textcontrollerAMOUNT = TextEditingController();
   final _textcontrollerITEM = TextEditingController();
   final _formKey = GlobalKey<FormState>();
