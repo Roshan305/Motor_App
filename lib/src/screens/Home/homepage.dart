@@ -1,7 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:motor_app/src/widgets/plus_button.dart';
+import 'package:motor_app/src/widgets/snackbar.dart';
 import 'package:motor_app/src/widgets/top_card.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key, required User user})
@@ -16,6 +18,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   late User user;
+  bool _isSubmitting = false;
   final _textcontrollerAMOUNT = TextEditingController();
   final _textcontrollerITEM = TextEditingController();
   final _formKey = GlobalKey<FormState>();
@@ -107,8 +110,35 @@ class _HomePageState extends State<HomePage> {
                         style: TextStyle(color: Colors.white)),
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
-                        // _enterTransaction();
-                        Navigator.of(context).pop();
+                        String amount = _textcontrollerAMOUNT.text;
+                        String reason = _textcontrollerITEM.text;
+                        String documentId = FirebaseFirestore.instance
+                            .collection('fuel_details')
+                            .doc()
+                            .id;
+
+                        Map<String, dynamic> data = {
+                          'amount': amount,
+                          'reason': reason,
+                        };
+
+                        FirebaseFirestore.instance
+                            .collection('fuel_details')
+                            .doc(documentId)
+                            .set(data)
+                            .then((value) {
+                          showSnackBar(context, 'Success',
+                              'Fuel Detail saved successfully', true);
+                          Navigator.of(context).pop();
+                        }).catchError((error) {
+                          showSnackBar(context, 'Failure',
+                              'Fuel Detail save Failed', false);
+                          Navigator.of(context).pop();
+                        }).whenComplete(() {
+                          setState(() {
+                            _isSubmitting = false;
+                          });
+                        });
                       }
                     },
                   )
@@ -145,21 +175,7 @@ class _HomePageState extends State<HomePage> {
                     Expanded(
                         child: Center(
                       child: Text('this is the body'),
-                    )
-                        // : ListView.builder(
-                        //     itemCount:
-                        //         GoogleSheetsApi.currentTransactions.length,
-                        //     itemBuilder: (context, index) {
-                        //       return MyTransaction(
-                        //         transactionName: GoogleSheetsApi
-                        //             .currentTransactions[index][0],
-                        //         money: GoogleSheetsApi
-                        //             .currentTransactions[index][1],
-                        //         expenseOrIncome: GoogleSheetsApi
-                        //             .currentTransactions[index][2],
-                        //       );
-                        //     }),
-                        )
+                    ))
                   ],
                 ),
               ),
@@ -171,5 +187,12 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _textcontrollerAMOUNT.dispose();
+    _textcontrollerITEM.dispose();
+    super.dispose();
   }
 }
