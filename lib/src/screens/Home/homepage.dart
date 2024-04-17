@@ -1,5 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:motor_app/src/models/fuel.dart';
 import 'package:motor_app/src/widgets/plus_button.dart';
 import 'package:motor_app/src/widgets/snackbar.dart';
 import 'package:motor_app/src/widgets/top_card.dart';
@@ -22,7 +24,6 @@ class _HomePageState extends State<HomePage> {
   final _textcontrollerAMOUNT = TextEditingController();
   final _textcontrollerITEM = TextEditingController();
   final _formKey = GlobalKey<FormState>();
-  bool _isIncome = false;
 
   void _newTransaction() {
     showDialog(
@@ -36,21 +37,21 @@ class _HomePageState extends State<HomePage> {
                 content: SingleChildScrollView(
                   child: Column(
                     children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          const Text('Expense'),
-                          Switch(
-                            value: _isIncome,
-                            onChanged: (newValue) {
-                              setState(() {
-                                _isIncome = newValue;
-                              });
-                            },
-                          ),
-                          const Text('Income'),
-                        ],
-                      ),
+                      // Row(
+                      //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      //   children: [
+                      //     const Text('Expense'),
+                      //     Switch(
+                      //       value: _isIncome,
+                      //       onChanged: (newValue) {
+                      //         setState(() {
+                      //           _isIncome = newValue;
+                      //         });
+                      //       },
+                      //     ),
+                      //     const Text('Income'),
+                      //   ],
+                      // ),
                       const SizedBox(
                         height: 5,
                       ),
@@ -117,9 +118,14 @@ class _HomePageState extends State<HomePage> {
                             .doc()
                             .id;
 
+                        final now = DateTime.now();
+                        final formattedDate =
+                            DateFormat('yyyy-MM-dd HH:mm').format(now);
+
                         Map<String, dynamic> data = {
                           'amount': amount,
                           'reason': reason,
+                          'dateTime': formattedDate,
                         };
 
                         FirebaseFirestore.instance
@@ -152,7 +158,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[300],
+      backgroundColor: Colors.white,
       body: Padding(
         padding: const EdgeInsets.all(25.0),
         child: Column(
@@ -166,19 +172,7 @@ class _HomePageState extends State<HomePage> {
               expense: const Text('300').toString(),
             ),
             const Expanded(
-              child: Center(
-                child: Column(
-                  children: [
-                    SizedBox(
-                      height: 20,
-                    ),
-                    Expanded(
-                        child: Center(
-                      child: Text('this is the body'),
-                    ))
-                  ],
-                ),
-              ),
+              child: FuelDetailsList(),
             ),
             PlusButton(
               function: _newTransaction,
