@@ -9,21 +9,27 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key, required User user})
-      : _user = user,
+      : user = user,
         super(key: key);
 
-  final User _user;
+  final User user;
 
   @override
   _HomePageState createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
-  late User user;
+  User? user;
   bool _isSubmitting = false;
   final _textcontrollerAMOUNT = TextEditingController();
   final _textcontrollerITEM = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+
+  @override
+  void initState() {
+    user = widget.user;
+    super.initState();
+  }
 
   void _newTransaction() {
     showDialog(
@@ -37,21 +43,6 @@ class _HomePageState extends State<HomePage> {
                 content: SingleChildScrollView(
                   child: Column(
                     children: [
-                      // Row(
-                      //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      //   children: [
-                      //     const Text('Expense'),
-                      //     Switch(
-                      //       value: _isIncome,
-                      //       onChanged: (newValue) {
-                      //         setState(() {
-                      //           _isIncome = newValue;
-                      //         });
-                      //       },
-                      //     ),
-                      //     const Text('Income'),
-                      //   ],
-                      // ),
                       const SizedBox(
                         height: 5,
                       ),
@@ -126,6 +117,7 @@ class _HomePageState extends State<HomePage> {
                           'amount': amount,
                           'reason': reason,
                           'dateTime': formattedDate,
+                          'user': user!.email,
                         };
 
                         FirebaseFirestore.instance
@@ -171,8 +163,8 @@ class _HomePageState extends State<HomePage> {
               income: const Text('100').toString(),
               expense: const Text('300').toString(),
             ),
-            const Expanded(
-              child: FuelDetailsList(),
+            Expanded(
+              child: FuelDetailsList(user: user!),
             ),
             PlusButton(
               function: _newTransaction,

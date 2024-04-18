@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:loading_indicator/loading_indicator.dart';
@@ -5,17 +6,22 @@ import 'package:lottie/lottie.dart';
 import 'package:motor_app/src/widgets/rounded_card.dart';
 
 class FuelDetailsList extends StatefulWidget {
-  const FuelDetailsList({Key? key}) : super(key: key);
+  User user;
+  FuelDetailsList({Key? key, required this.user}) : super(key: key);
 
   @override
   State<FuelDetailsList> createState() => _FuelDetailsListState();
 }
 
 class _FuelDetailsListState extends State<FuelDetailsList> {
+  late User user;
   final _firestore = FirebaseFirestore.instance;
 
   Future<List<Map<String, dynamic>>> _getFuelDetails() async {
-    final querySnapshot = await _firestore.collection('fuel_details').get();
+    final querySnapshot = await _firestore
+        .collection('fuel_details')
+        .where('user', isEqualTo: widget.user.email)
+        .get();
     return querySnapshot.docs
         .map((doc) => doc.data() as Map<String, dynamic>)
         .toList();
