@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:loading_indicator/loading_indicator.dart';
 import 'package:motor_app/src/models/fuel.dart';
 import 'package:motor_app/src/widgets/plus_button.dart';
 import 'package:motor_app/src/widgets/snackbar.dart';
@@ -21,6 +22,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   User? user;
   bool _isSubmitting = false;
+  bool _isLoading = false;
   final _textcontrollerAMOUNT = TextEditingController();
   final _textcontrollerITEM = TextEditingController();
   final _formKey = GlobalKey<FormState>();
@@ -98,47 +100,59 @@ class _HomePageState extends State<HomePage> {
                   ),
                   MaterialButton(
                     color: Colors.grey[600],
-                    child: const Text('Enter',
-                        style: TextStyle(color: Colors.white)),
-                    onPressed: () {
-                      if (_formKey.currentState!.validate()) {
-                        String amount = _textcontrollerAMOUNT.text;
-                        String reason = _textcontrollerITEM.text;
-                        String documentId = FirebaseFirestore.instance
-                            .collection('fuel_details')
-                            .doc()
-                            .id;
+                    onPressed: _isLoading // Disable button while loading
+                        ? null
+                        : () {
+                            if (_formKey.currentState!.validate()) {
+                              String amount = _textcontrollerAMOUNT.text;
+                              String reason = _textcontrollerITEM.text;
+                              String documentId = FirebaseFirestore.instance
+                                  .collection('fuel_details')
+                                  .doc()
+                                  .id;
 
-                        final now = DateTime.now();
-                        final formattedDate =
-                            DateFormat('yyyy-MM-dd HH:mm').format(now);
+                              final now = DateTime.now();
+                              final formattedDate =
+                                  DateFormat('yyyy-MM-dd HH:mm').format(now);
 
-                        Map<String, dynamic> data = {
-                          'amount': amount,
-                          'reason': reason,
-                          'dateTime': formattedDate,
-                          'user': user!.email,
-                        };
+                              Map<String, dynamic> data = {
+                                'amount': amount,
+                                'reason': reason,
+                                'dateTime': formattedDate,
+                                'user': user!.email,
+                              };
 
-                        FirebaseFirestore.instance
-                            .collection('fuel_details')
-                            .doc(documentId)
-                            .set(data)
-                            .then((value) {
-                          showSnackBar(context, 'Success',
-                              'Fuel Detail saved successfully', true);
-                          Navigator.of(context).pop();
-                        }).catchError((error) {
-                          showSnackBar(context, 'Failure',
-                              'Fuel Detail save Failed', false);
-                          Navigator.of(context).pop();
-                        }).whenComplete(() {
-                          setState(() {
-                            _isSubmitting = false;
-                          });
-                        });
-                      }
-                    },
+                              setState(() {
+                                _isLoading =
+                                    true; // Set loading to true before adding data
+                              });
+
+                              FirebaseFirestore.instance
+                                  .collection('fuel_details')
+                                  .doc(documentId)
+                                  .set(data)
+                                  .then((value) {
+                                Navigator.of(context).pop();
+                                showSnackBar(context, 'Success',
+                                    'Fuel Detail saved successfully', true);
+                                _refreshFuelDetailsList();
+                              }).catchError((error) {
+                                showSnackBar(context, 'Failure',
+                                    'Fuel Detail save Failed', false);
+                              }).whenComplete(() {
+                                setState(() {
+                                  _isLoading =
+                                      false; // Set loading to false after completing the operation
+                                  _isSubmitting = false;
+                                });
+                              });
+                            }
+                          },
+                    child:
+                        _isLoading // Display loading indicator if _isLoading is true
+                            ? const LoadingIndicator(indicatorType: Indicator.ballClipRotatePulse) // Loading indicator
+                            : const Text('Enter',
+                                style: TextStyle(color: Colors.white)),
                   )
                 ],
               );
@@ -173,6 +187,10 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
     );
+  }
+
+  void _refreshFuelDetailsList() {
+    setState(() {}); // Trigger a rebuild of the FuelDetailsList
   }
 
   @override
