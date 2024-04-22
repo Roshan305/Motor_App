@@ -163,17 +163,15 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       backgroundColor: Colors.white,
       body: Padding(
-        padding: const EdgeInsets.all(25.0),
+        padding: const EdgeInsets.only(top: 25.0, left: 25.0, right: 25.0),
         child: Column(
           children: [
             const SizedBox(
-              height: 30,
+              height: 10,
             ),
-            TopNeuCard(
-              balance: const Text('200').toString(),
-              income: const Text('100').toString(),
-              expense: const Text('300').toString(),
-            ),
+            Obx(() => TopNeuCard(
+                  totalAmount: myController.totalAmount.value,
+                )),
             Expanded(
               child: FuelDetailsList(user: user!),
             ),

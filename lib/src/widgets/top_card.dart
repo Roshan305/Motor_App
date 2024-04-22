@@ -1,126 +1,137 @@
 import 'package:flutter/material.dart';
+import 'package:motor_app/src/widgets/bar_chart.dart';
 
 class TopNeuCard extends StatelessWidget {
-  final String balance;
-  final String income;
-  final String expense;
+  final double totalAmount;
 
-  TopNeuCard({
-    required this.balance,
-    required this.expense,
-    required this.income,
+  const TopNeuCard({
+    required this.totalAmount,
+    super.key,
   });
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(4.0),
-      child: Container(
-        height: 200,
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(15),
-            color: Colors.grey[300],
-            boxShadow: [
-              BoxShadow(
-                  color: Colors.grey.shade500,
-                  offset: const Offset(4.0, 4.0),
-                  blurRadius: 15.0,
-                  spreadRadius: 1.0),
-              const BoxShadow(
-                  color: Colors.white,
-                  offset: Offset(-4.0, -4.0),
-                  blurRadius: 15.0,
-                  spreadRadius: 1.0),
-            ]),
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      child: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text('BALANCE',
-                  style: TextStyle(color: Colors.grey[500], fontSize: 16)),
-              Text(
-                '\$ 100',
-                style: TextStyle(color: Colors.grey[800], fontSize: 40),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      children: [
-                        Container(
-                          padding: const EdgeInsets.all(10),
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: Colors.grey[200],
-                          ),
-                          child: const Center(
-                            child: Icon(
-                              Icons.arrow_upward,
-                              color: Colors.green,
-                            ),
-                          ),
-                        ),
-                        const SizedBox(
-                          width: 10,
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text('Income',
-                                style: TextStyle(color: Colors.grey[500])),
-                            const SizedBox(
-                              height: 5,
-                            ),
-                            Text('\$ 200',
-                                style: TextStyle(
-                                    color: Colors.grey[600],
-                                    fontWeight: FontWeight.bold)),
-                          ],
-                        )
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        Container(
-                          padding: const EdgeInsets.all(10),
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: Colors.grey[200],
-                          ),
-                          child: const Center(
-                            child: Icon(
-                              Icons.arrow_downward,
-                              color: Colors.red,
-                            ),
-                          ),
-                        ),
-                        const SizedBox(
-                          width: 10,
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text('Expense',
-                                style: TextStyle(color: Colors.grey[500])),
-                            const SizedBox(
-                              height: 5,
-                            ),
-                            Text('\$ 250',
-                                style: TextStyle(
-                                    color: Colors.grey[600],
-                                    fontWeight: FontWeight.bold)),
-                          ],
-                        )
-                      ],
-                    )
-                  ],
+              Container(
+                height: 120,
+                width: 120,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(15),
+                    color: Colors.grey[300],
+                    boxShadow: [
+                      BoxShadow(
+                          color: Colors.grey.shade500,
+                          offset: const Offset(4.0, 4.0),
+                          blurRadius: 15.0,
+                          spreadRadius: 1.0),
+                      const BoxShadow(
+                          color: Colors.white,
+                          offset: Offset(-4.0, -4.0),
+                          blurRadius: 15.0,
+                          spreadRadius: 1.0),
+                    ]),
+                child: Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Text('Total Spent',
+                          style:
+                              TextStyle(color: Colors.grey[500], fontSize: 16)),
+                      Text(
+                        'Rs. ${totalAmount.toStringAsFixed(1)}',
+                        style: TextStyle(color: Colors.grey[800], fontSize: 20),
+                      ),
+                    ],
+                  ),
                 ),
-              )
+              ),
+              Container(
+                height: 120,
+                width: 120,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(15),
+                    color: Colors.grey[300],
+                    boxShadow: [
+                      BoxShadow(
+                          color: Colors.grey.shade500,
+                          offset: const Offset(4.0, 4.0),
+                          blurRadius: 15.0,
+                          spreadRadius: 1.0),
+                      const BoxShadow(
+                          color: Colors.white,
+                          offset: Offset(-4.0, -4.0),
+                          blurRadius: 15.0,
+                          spreadRadius: 1.0),
+                    ]),
+                child: Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Text('This Month',
+                          style:
+                              TextStyle(color: Colors.grey[500], fontSize: 16)),
+                      Text(
+                        '\$ 150',
+                        style: TextStyle(color: Colors.grey[800], fontSize: 40),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              Container(
+                height: 120,
+                width: 120,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(15),
+                    color: Colors.grey[300],
+                    boxShadow: [
+                      BoxShadow(
+                          color: Colors.grey.shade500,
+                          offset: const Offset(4.0, 4.0),
+                          blurRadius: 15.0,
+                          spreadRadius: 1.0),
+                      const BoxShadow(
+                          color: Colors.white,
+                          offset: Offset(-4.0, -4.0),
+                          blurRadius: 15.0,
+                          spreadRadius: 1.0),
+                    ]),
+                child: Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Text('Saved',
+                          style:
+                              TextStyle(color: Colors.grey[500], fontSize: 16)),
+                      Text(
+                        '\$ 100',
+                        style: TextStyle(color: Colors.grey[800], fontSize: 40),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
             ],
           ),
-        ),
+          const SizedBox(height: 20), // Add spacing between the two rows
+          Row(
+            mainAxisAlignment:
+                MainAxisAlignment.center, // Align items to center
+            children: [
+              SizedBox(
+                height: 200,
+                width: 300,
+                child: VerticalBarChartSample(),
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }

@@ -11,12 +11,34 @@ class MyController extends GetxController {
   var isSubmitting = false.obs;
   var fuelDetails = <Map<String, dynamic>>[].obs;
   User? user;
+  var totalAmount = 0.0.obs;
 
   void refreshFuelDetailsList(User user) async {
     var snapshot = await FirebaseFirestore.instance
         .collection('fuel_details')
         .where('user', isEqualTo: user.email)
         .get();
+
+    // Clear existing fuelDetails
+    fuelDetails.clear();
+
+    // Reset totalAmount
+    totalAmount.value = 0;
+    // Iterate through each document
+    snapshot.docs.forEach((doc) {
+      // Get the data of the document
+      Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
+
+      // Add the data to fuelDetails
+      fuelDetails.add(data);
+
+      // Extract the amount from the document data and add it to the totalAmount
+      if (data.containsKey('amount') && data['amount'] is num) {
+        totalAmount.value += data['amount'];
+        print('total amount: $totalAmount');
+      }
+    });
+
     fuelDetails.assignAll(snapshot.docs.map((doc) => doc.data()).toList());
   }
 
@@ -132,7 +154,7 @@ class MyController extends GetxController {
 
     if (formKey.currentState!.validate()) {
       isSubmitting(true);
-      String amount = textControllerAmount.text;
+      double amount = double.parse(textControllerAmount.text);
       String reason = textControllerItem.text;
       String documentId =
           FirebaseFirestore.instance.collection('fuel_details').doc().id;
