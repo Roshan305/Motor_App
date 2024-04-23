@@ -77,8 +77,8 @@ class TopNeuCard extends StatelessWidget {
                           style:
                               TextStyle(color: Colors.grey[500], fontSize: 16)),
                       Text(
-                        '\$ 150',
-                        style: TextStyle(color: Colors.grey[800], fontSize: 40),
+                        'Rs. ${totalAmount.toStringAsFixed(1)}',
+                        style: TextStyle(color: Colors.grey[800], fontSize: 20),
                       ),
                     ],
                   ),
