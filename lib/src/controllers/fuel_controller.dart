@@ -3,6 +3,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:loading_indicator/loading_indicator.dart';
+import 'dart:core';
 import 'package:motor_app/src/widgets/snackbar.dart';
 
 class MyController extends GetxController {
@@ -11,8 +13,10 @@ class MyController extends GetxController {
   var fuelDetails = <Map<String, dynamic>>[].obs;
   User? user;
   var totalAmount = 0.0.obs;
+  var totalAmountMonthly = 0.0.obs;
 
   void refreshFuelDetailsList(User user) async {
+    var now = DateTime.now();
     var snapshot = await FirebaseFirestore.instance
         .collection('fuel_details')
         .where('user', isEqualTo: user.email)
@@ -23,6 +27,7 @@ class MyController extends GetxController {
 
     // Reset totalAmount
     totalAmount.value = 0;
+    totalAmountMonthly.value = 0;
     // Iterate through each document
     snapshot.docs.forEach((doc) {
       // Get the data of the document
@@ -35,6 +40,11 @@ class MyController extends GetxController {
       if (data.containsKey('amount') && data['amount'] is num) {
         totalAmount.value += data['amount'];
         print('total amount: $totalAmount');
+        DateTime docDateTime = DateTime.parse(data['dateTime']);
+        if (docDateTime.month == now.month && docDateTime.year == now.year) {
+          totalAmountMonthly.value += data['amount'];
+          print('total amount spent this month: $totalAmountMonthly');
+        }
       }
     });
 
