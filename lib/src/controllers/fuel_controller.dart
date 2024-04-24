@@ -55,7 +55,7 @@ class MyController extends GetxController {
     BuildContext context,
     GlobalKey<FormState> formKey,
     TextEditingController textControllerAmount,
-    TextEditingController textControllerItem,
+    TextEditingController textControllerQuantity,
     User user,
   ) async {
     var result = showDialog(
@@ -104,9 +104,9 @@ class MyController extends GetxController {
                           child: TextField(
                             decoration: const InputDecoration(
                               border: OutlineInputBorder(),
-                              hintText: 'For what?',
+                              hintText: 'How Much?',
                             ),
-                            controller: textControllerItem,
+                            controller: textControllerQuantity,
                           ),
                         ),
                       ],
@@ -128,7 +128,7 @@ class MyController extends GetxController {
                   onPressed: isLoading.value
                       ? null
                       : () => _submitTransaction(context, formKey,
-                          textControllerAmount, textControllerItem, user),
+                          textControllerAmount, textControllerQuantity, user),
                   child: isSubmitting.value
                       ? const SizedBox(
                           width: 40,
@@ -148,7 +148,7 @@ class MyController extends GetxController {
     );
     if (result != null && result == true) {
       textControllerAmount.clear();
-      textControllerItem.clear();
+      textControllerQuantity.clear();
     }
   }
 
@@ -156,7 +156,7 @@ class MyController extends GetxController {
     BuildContext context,
     GlobalKey<FormState> formKey,
     TextEditingController textControllerAmount,
-    TextEditingController textControllerItem,
+    TextEditingController textControllerQuantity,
     User user,
   ) async {
     if (isLoading.value || isSubmitting.value) return;
@@ -164,7 +164,7 @@ class MyController extends GetxController {
     if (formKey.currentState!.validate()) {
       isSubmitting(true);
       double amount = double.parse(textControllerAmount.text);
-      String reason = textControllerItem.text;
+      String quantity = textControllerQuantity.text;
       String documentId =
           FirebaseFirestore.instance.collection('fuel_details').doc().id;
 
@@ -173,7 +173,7 @@ class MyController extends GetxController {
 
       Map<String, dynamic> data = {
         'amount': amount,
-        'reason': reason,
+        'quantity': quantity,
         'dateTime': formattedDate,
         'user': user!.email,
       };
@@ -195,7 +195,7 @@ class MyController extends GetxController {
         isLoading(false);
         isSubmitting(false);
         textControllerAmount.clear();
-        textControllerItem.clear();
+        textControllerQuantity.clear();
       });
     }
   }

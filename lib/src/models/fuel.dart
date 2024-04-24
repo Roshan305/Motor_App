@@ -64,12 +64,39 @@ class _FuelDetailsListState extends State<FuelDetailsList> {
                   title: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text('Amount: ${fuelDetail['amount']}'),
-                      Text(
-                          'Date: ${fuelDetail['dateTime'].toString().substring(0, 10)}'),
+                      Row(
+                        children: [
+                          const Icon(
+                            Icons.monetization_on,
+                            color: Colors.grey,
+                            size: 16,
+                          ),
+                          const SizedBox(
+                              width:
+                                  4), // Add some spacing between icon and text
+                          Text(
+                            fuelDetail['amount'].toString(),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          const Icon(
+                            Icons.calendar_today,
+                            color: Colors.grey,
+                            size: 16,
+                          ),
+                          const SizedBox(
+                              width:
+                                  4), // Add some spacing between icon and text
+                          Text(
+                            fuelDetail['dateTime'].toString().substring(0, 10),
+                          ),
+                        ],
+                      ),
                     ],
                   ),
-                  subtitle: Text('Reason: ${fuelDetail['reason']}'),
+                  subtitle: Text('Quantity: ${fuelDetail['quantity']}'),
                 ),
               ),
             );
