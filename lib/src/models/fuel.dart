@@ -73,7 +73,7 @@ class _FuelDetailsListState extends State<FuelDetailsList> {
                           ),
                           const SizedBox(
                               width:
-                                  4), // Add some spacing between icon and text
+                                  4),
                           Text(
                             fuelDetail['amount'].toString(),
                           ),
@@ -88,7 +88,7 @@ class _FuelDetailsListState extends State<FuelDetailsList> {
                           ),
                           const SizedBox(
                               width:
-                                  4), // Add some spacing between icon and text
+                                  4),
                           Text(
                             fuelDetail['dateTime'].toString().substring(0, 10),
                           ),
