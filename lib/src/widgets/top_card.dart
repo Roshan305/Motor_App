@@ -4,10 +4,12 @@ import 'package:motor_app/src/widgets/bar_chart.dart';
 class TopNeuCard extends StatelessWidget {
   final double totalAmount;
   final double totalAmountMonthly;
+  final double totalAmountSaved;
 
   const TopNeuCard({
     required this.totalAmount,
     required this.totalAmountMonthly,
+    required this.totalAmountSaved,
     super.key,
   });
 
@@ -112,8 +114,8 @@ class TopNeuCard extends StatelessWidget {
                           style:
                               TextStyle(color: Colors.grey[500], fontSize: 16)),
                       Text(
-                        '\$ 100',
-                        style: TextStyle(color: Colors.grey[800], fontSize: 40),
+                        'Rs. ${totalAmountSaved.toStringAsFixed(1)}',
+                        style: TextStyle(color: Colors.grey[800], fontSize: 20),
                       ),
                     ],
                   ),

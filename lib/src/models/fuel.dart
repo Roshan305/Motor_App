@@ -71,11 +71,9 @@ class _FuelDetailsListState extends State<FuelDetailsList> {
                             color: Colors.grey,
                             size: 16,
                           ),
-                          const SizedBox(
-                              width:
-                                  4),
+                          const SizedBox(width: 4),
                           Text(
-                            fuelDetail['amount'].toString(),
+                            'Rs. ${fuelDetail['amount'].toString()}',
                           ),
                         ],
                       ),
@@ -86,9 +84,7 @@ class _FuelDetailsListState extends State<FuelDetailsList> {
                             color: Colors.grey,
                             size: 16,
                           ),
-                          const SizedBox(
-                              width:
-                                  4),
+                          const SizedBox(width: 4),
                           Text(
                             fuelDetail['dateTime'].toString().substring(0, 10),
                           ),

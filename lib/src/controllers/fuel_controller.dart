@@ -14,9 +14,21 @@ class MyController extends GetxController {
   User? user;
   var totalAmount = 0.0.obs;
   var totalAmountMonthly = 0.0.obs;
+  var totalSaved = 0.0.obs;
 
   void refreshFuelDetailsList(User user) async {
     var now = DateTime.now();
+    var currentMonth = now.month;
+    var currentYear = now.year;
+
+    // Get the last month and year
+    var lastMonth = currentMonth - 1;
+    var lastMonthYear = currentYear;
+    if (lastMonth == 0) {
+      lastMonth = 12; // December
+      lastMonthYear--;
+    }
+
     var snapshot = await FirebaseFirestore.instance
         .collection('fuel_details')
         .where('user', isEqualTo: user.email)
@@ -28,6 +40,9 @@ class MyController extends GetxController {
     // Reset totalAmount
     totalAmount.value = 0;
     totalAmountMonthly.value = 0;
+
+    double totalAmountLastMonth = 0;
+
     // Iterate through each document
     snapshot.docs.forEach((doc) {
       // Get the data of the document
@@ -39,14 +54,21 @@ class MyController extends GetxController {
       // Extract the amount from the document data and add it to the totalAmount
       if (data.containsKey('amount') && data['amount'] is num) {
         totalAmount.value += data['amount'];
-        print('total amount: $totalAmount');
+
         DateTime docDateTime = DateTime.parse(data['dateTime']);
-        if (docDateTime.month == now.month && docDateTime.year == now.year) {
+        if (docDateTime.month == currentMonth &&
+            docDateTime.year == currentYear) {
           totalAmountMonthly.value += data['amount'];
-          print('total amount spent this month: $totalAmountMonthly');
+        } else if (docDateTime.month == lastMonth &&
+            docDateTime.year == lastMonthYear) {
+          totalAmountLastMonth += data['amount'];
+          print(totalAmountLastMonth);
         }
       }
     });
+
+    totalSaved.value = totalAmountMonthly.value - totalAmountLastMonth;
+    print('Total Saved: $totalSaved');
 
     fuelDetails.assignAll(snapshot.docs.map((doc) => doc.data()).toList());
   }

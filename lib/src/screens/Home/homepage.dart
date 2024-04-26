@@ -44,6 +44,7 @@ class _HomePageState extends State<HomePage> {
             Obx(() => TopNeuCard(
                   totalAmount: myController.totalAmount.value,
                   totalAmountMonthly: myController.totalAmountMonthly.value,
+                  totalAmountSaved: myController.totalSaved.value,
                 )),
             Expanded(
               child: FuelDetailsList(user: user!),
